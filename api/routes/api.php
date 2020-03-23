@@ -23,4 +23,4 @@ Route::get('foo', function(){
     return 'hi';
 });
 
-//Route::get('v1/getLocation', 'shopLocationController');
+Route::get('getShopLocation','api\getShopLocation@get');
