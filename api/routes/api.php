@@ -15,12 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('user/{id}', function($id){
-    return 'User '.$id;
-});
-
-Route::get('foo', function(){
-    return 'hi';
-});
-
-Route::get('getShopLocation','api\getShopLocation@get');
+Route::get('updateShopLocation','api\ShopLocation@update');
+Route::get('getShopLocation','api\ShopLocation@get');
