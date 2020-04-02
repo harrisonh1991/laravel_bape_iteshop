@@ -36,6 +36,9 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        if($exception instanceof RequestException){
+            return 'fuck you';   
+        }
         parent::report($exception);
     }
 
@@ -50,6 +53,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if($exception instanceof RequestException){
+            return 'fuck you';   
+        }
         return parent::render($request, $exception);
     }
 }
