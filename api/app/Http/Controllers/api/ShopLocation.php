@@ -6,27 +6,28 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 use App\Customize\Convert\CSVConvert;
-
-use App\Customize\Http\GuzzleHttpHandler;
+use App\Customize\System\LogHandler;
 
 class ShopLocation extends Controller
 {
     protected
-        $file_path = 'https://docs.google.com/spreadsheets/d/1yaKaGMzs-cBdGvqfc2FrbL4KZj2rfTZT82J1vxD0g6w1/export?format=csv',
+        $file_path = 'https://docs.google.com/spreadsheets/d/1yaKaGMzs-cBdGvqfc2FrbL4KZj2rfTZT82J1vxD0g6w/export?format=csv',
         $txt_path = 'location/shop/data.txt',
         $log_name = 'ShopLocation',
-        $gizzle,
-        $csv;
+        $res,
+        $csv,
+        $log, $logHandler;
 
     public function __construct(){
-        $this->gizzle = new GuzzleHttpHandler($this->log_name,$this->file_path);
+        $logHandler = &$this->logHandler;
+        $logHandler = new LogHandler($this->log_name);
+        $this->log = &$logHandler->log;
     }
 
     public function update(){
-        $gizzle = &$this->gizzle;
         $csv = &$this->csv;
-        $csv = new CSVConvert();
-        $json_shoplocation = $csv->toJson($gizzle->res->getBody());
+        $csv = new CSVConvert($this->log);
+        $json_shoplocation = $csv->FileToJson($this->file_path);
         Storage::put($this->txt_path, $json_shoplocation);
     }
 
