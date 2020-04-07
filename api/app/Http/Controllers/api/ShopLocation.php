@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Storage;
 use App\Customize\Convert\CSVConvert;
-use App\Customize\System\LogHandler;
+use App\Customize\System\Log\LogHandler;
+use App\Customize\System\Log\ProcessLogHandler;
 
 class ShopLocation extends Controller
 {
@@ -24,10 +25,12 @@ class ShopLocation extends Controller
     }
 
     public function update(){
+        $SyslogHandler = new ProcessLogHandler($this->log_name." Update");
         $csv = &$this->csv;
-        $csv = new CSVConvert($this->logHandler);
+        $csv = new CSVConvert($this->SyslogHandler);
         $json_shoplocation = $csv->FileToJson($this->file_path);
         Storage::put($this->txt_path, $json_shoplocation);
+        unset($SyslogHandler);
     }
 
     public function get(){

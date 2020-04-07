@@ -1,5 +1,5 @@
 <?php
-namespace App\Customize\System;
+namespace App\Customize\System\Log;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
@@ -24,7 +24,7 @@ class LogHandler{
         $logger->error($msg,$detail);
     }
 
-    public function log($msg,$detail){
+    public function info($msg,$detail){
         $logger = &$this->logger;
         $logger = new Logger($this->log_name);
         $logger->pushHandler(new StreamHandler('Log/info_'.$this->date_start->format('Y_m').'.log', Logger::DEBUG));
