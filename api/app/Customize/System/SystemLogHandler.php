@@ -11,6 +11,7 @@ class SystemLogHandler extends LogHandler{
 
     public function __construct($log_name){
         parent::__construct($log_name);
+        $this->logger->info();
     }
 
     public function __destruct(){

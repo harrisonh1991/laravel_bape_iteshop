@@ -15,12 +15,20 @@ class LogHandler{
     public function __construct($log_name){
         $this->log_name = $log_name;
         $this->date_start = new DateTime();
-        $this->init();
     }
 
-    public function init(){
+    public function error($msg,$detail){
         $logger = &$this->logger;
         $logger = new Logger($this->log_name);
-        $logger->pushHandler(new StreamHandler('Log/Sys/'.$this->date_start->format('Y_m').'.log', Logger::WARNING));
+        $logger->pushHandler(new StreamHandler('Log/error_'.$this->date_start->format('Y_m').'.log', Logger::DEBUG));
+        $logger->error($msg,$detail);
     }
+
+    public function log($msg,$detail){
+        $logger = &$this->logger;
+        $logger = new Logger($this->log_name);
+        $logger->pushHandler(new StreamHandler('Log/info_'.$this->date_start->format('Y_m').'.log', Logger::DEBUG));
+        $logger->info($msg,$detail);
+    }
+
 }

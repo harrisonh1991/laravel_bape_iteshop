@@ -5,37 +5,37 @@ use App\Exceptions\LogException;
 
 class CSVConvert{ 
 
-    protected $logger;
+    protected $logHandler, $file, $path;
 
-    public function __construct(&$logger){
-        $this->logger = &$logger;
+    public function __construct(&$logHandler){
+        $this->logHandler = &$logHandler;
     }
 
     public function FileToJson(&$path){
         $ctx = '';
         $ttl = '';
-        $file;
         $res = array();
-        $logger = &$this->logger;
-        
-        if (!file_exists($path))
-            throw new LogException($logger,'File not found.');
-    
-        if (!$fp = fopen($path, "rb"))
-            throw new LogException($logger,'File open failed.');
+        $this->path = $path;
+        $file = &$this->file;
+        $logHandler = &$this->logHandler;
 
-        $file = fopen($path, "r");
+        $this->checkFileExist();
         if(!feof($file))
             $ttl = fgetcsv($file);
         while(!feof($file))
             $res[] = $this->twoArrayToKeyValJson($ttl,fgetcsv($file)); 
         fclose($file);
-
         return json_encode($res);
     }
 
-    public function VarToJson(&$ctx){
-        
+    protected function checkFileExist(){
+        $path = $this->path;
+        $file = &$this->file;
+        if (!file_exists($path)&&!($file = fopen($path, "rb")))
+            throw new LogException($logHandler,'File not found.');
+    
+        if (!$file)
+            throw new LogException($logHandler,'File open failed.');
     }
     
     protected function twoArrayToKeyValJson($key,$val){

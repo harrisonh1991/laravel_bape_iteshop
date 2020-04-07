@@ -16,17 +16,16 @@ class ShopLocation extends Controller
         $log_name = 'ShopLocation',
         $res,
         $csv,
-        $log, $logHandler;
+        $logHandler;
 
     public function __construct(){
         $logHandler = &$this->logHandler;
         $logHandler = new LogHandler($this->log_name);
-        $this->log = &$logHandler->log;
     }
 
     public function update(){
         $csv = &$this->csv;
-        $csv = new CSVConvert($this->log);
+        $csv = new CSVConvert($this->logHandler);
         $json_shoplocation = $csv->FileToJson($this->file_path);
         Storage::put($this->txt_path, $json_shoplocation);
     }

@@ -19,16 +19,17 @@ class LogException extends Exception
      * 
      */
 
-    public function __construct(&$logger, $message, $detail = array(), $code = 0, Exception $previous = null){
+    public function __construct(&$loggerHandler, $message, $detail = array(), $code = 0, Exception $previous = null)
+    {
         $this->message = $message;
         $this->detail = $detail;
-        $this->logger = &$logger;
+        $this->loggerHandler = &$loggerHandler;
         parent::__construct($message, $code, $previous);
     }
 
     public function report()
     {
-        $this->logger->error($this->message,$this->detail);
+        $this->loggerHandler->error($this->message,$this->detail);
         exit();
     }
 
