@@ -20,14 +20,14 @@ class LogHandler{
     public function error($msg,$detail){
         $logger = &$this->logger;
         $logger = new Logger($this->log_name);
-        $logger->pushHandler(new StreamHandler('Log/error_'.$this->date_start->format('Y_m').'.log', Logger::DEBUG));
+        $logger->pushHandler(new StreamHandler(config('global.rootDir').'/public/Log/error_'.$this->date_start->format('Y_m').'.log', Logger::DEBUG));
         $logger->error($msg,$detail);
     }
 
     public function info($msg,$detail){
         $logger = &$this->logger;
         $logger = new Logger($this->log_name);
-        $logger->pushHandler(new StreamHandler('Log/info_'.$this->date_start->format('Y_m').'.log', Logger::DEBUG));
+        $logger->pushHandler(new StreamHandler(config('global.rootDir').'/public/Log/info_'.$this->date_start->format('Y_m').'.log', Logger::DEBUG));
         $logger->info($msg,$detail);
     }
 
