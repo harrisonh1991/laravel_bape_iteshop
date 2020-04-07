@@ -1,7 +1,10 @@
 <?php
 namespace App\Customize\Convert;
 
+use \Exception;
 use App\Exceptions\LogException;
+use App\Exceptions\FileNoFoundException;
+use App\Exceptions\FileOpenFailException;
 
 class CSVConvert{ 
 
@@ -11,7 +14,7 @@ class CSVConvert{
         $this->logHandler = &$logHandler;
     }
 
-    public function FileToJson(&$path){
+    public function GoogleExportToJson(&$path){
         $ctx = '';
         $ttl = '';
         $res = array();
@@ -19,7 +22,7 @@ class CSVConvert{
         $file = &$this->file;
         $logHandler = &$this->logHandler;
 
-        $this->checkFileExist();
+        $this->checkGoogleExportExist();
         if(!feof($file))
             $ttl = fgetcsv($file);
         while(!feof($file))
@@ -28,14 +31,16 @@ class CSVConvert{
         return json_encode($res);
     }
 
-    protected function checkFileExist(){
+    protected function checkGoogleExportExist(){
         $path = $this->path;
         $file = &$this->file;
-        if (!file_exists($path)&&!($file = fopen($path, "rb")))
-            throw new LogException($logHandler,'File not found.');
-    
-        if (!$file)
-            throw new LogException($logHandler,'File open failed.');
+        $logHandler = &$this->logHandler;
+
+        try{
+            $file = fopen($this->path, "rb");
+        }catch(Exception $e){
+            throw new FileNoFoundException($this->logHandler,'',array('Google Export Url'));
+        }
     }
     
     protected function twoArrayToKeyValJson($key,$val){

@@ -3,10 +3,11 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Customize\Http\HttpResponse;
 
 class LogException extends Exception
 {
-    protected $logger, $message, $detail;
+    protected $loggerHandler, $message, $detail, $http_res;
 
     /**
      * logger : Monolog - logger
@@ -21,6 +22,7 @@ class LogException extends Exception
 
     public function __construct(&$loggerHandler, $message, $detail = array(), $code = 0, Exception $previous = null)
     {
+        $this->http_res = new HttpResponse();
         $this->message = $message;
         $this->detail = $detail;
         $this->loggerHandler = &$loggerHandler;
@@ -30,7 +32,7 @@ class LogException extends Exception
     public function report()
     {
         $this->loggerHandler->error($this->message,$this->detail);
+        $this->http_res->error($this->message);
         exit();
     }
-
 }
