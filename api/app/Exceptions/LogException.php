@@ -2,8 +2,12 @@
 
 namespace App\Exceptions;
 
+use \stdClass;
 use Exception;
 use App\Customize\Http\HttpResponse;
+
+use App\Mail\System\SystemErrorMail;
+use Illuminate\Support\Facades\Mail;
 
 class LogException extends Exception
 {
@@ -12,12 +16,12 @@ class LogException extends Exception
     /**
      * logger : Monolog - logger
      * message : title
-     * detail : variable  
-     * 
+     * detail : variable
+     *
      * @param logger
      * @param message
      * @param detail
-     * 
+     *
      */
 
     public function __construct(&$loggerHandler, $message, $detail = array(), $code = 0, Exception $previous = null)
@@ -33,6 +37,11 @@ class LogException extends Exception
     {
         $this->loggerHandler->error($this->message,$this->detail);
         $this->http_res->error($this->message);
+        $mystd = new stdClass();
+        $mystd->message = $this->message;
+        $mystd->detail = $this->detail;
+        Mail::to(config('mail.debug_group.address'))
+            ->queue(new SystemErrorMail($mystd));
         exit();
     }
 }

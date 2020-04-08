@@ -15,7 +15,7 @@ use App\Customize\System\Log\ProcessLogHandler;
 class ShopLocation extends Controller
 {
     protected
-        $file_path = 'https://docs.google.com/spreadsheets/d/1yaKaGMzs-cBdGvqfc2FrbL4KZj2rfTZT82J1vxD0g6w/export?format=csv',
+        $file_path = 'https://docs.google.com/spreadsheets/d/1yaKaGMzs-cBdGvqfc2FrbL4KZj2rfTZT82J1vxD0g6w1/export?format=csv',
         $txt_path = 'location/shop/data.txt',
         $log_name = 'ShopLocation',
         $res,

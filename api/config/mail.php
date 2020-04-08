@@ -36,11 +36,11 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+            'host' => env('MAIL_HOST', 'smtp-mail.outlook.com'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'username' => env('harrisonh@ithk.com'),
+            'password' => env('N_jjvkk8338'),
         ],
 
         'ses' => [
@@ -62,6 +62,10 @@ return [
         ],
     ],
 
+    'debug_group'=>[
+        'address'=>'harrisonh@ithk.com'
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Global "From" Address
@@ -74,8 +78,20 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'harrisonh@ithk.com'),
+        'name' => env('MAIL_FROM_NAME', 'Bape Server'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    |
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'reply_to' => [
+        'address' => 'harrisonh@ithk.com',
+        'name' => 'Bape Server'
     ],
 
     /*
@@ -95,6 +111,6 @@ return [
         'paths' => [
             resource_path('views/vendor/mail'),
         ],
-    ],
+    ]
 
 ];
