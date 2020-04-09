@@ -11,7 +11,7 @@ class SystemErrorMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $params;
+    public $params;
 
     /**
      * Create a new message instance.
@@ -30,9 +30,6 @@ class SystemErrorMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.system.SystemErrorEmailView')
-                    ->with([
-                        'message'=> $this->params->message
-                    ]);
+        return $this->view('emails.system.SystemErrorEmailView');
     }
 }

@@ -37,11 +37,16 @@ class LogException extends Exception
     {
         $this->loggerHandler->error($this->message,$this->detail);
         $this->http_res->error($this->message);
-        $mystd = new stdClass();
-        $mystd->message = $this->message;
-        $mystd->detail = $this->detail;
-        Mail::to(config('mail.debug_group.address'))
-            ->queue(new SystemErrorMail($mystd));
+        $data = [
+            'message'=>$this->message,
+            'detail' => $this->detail
+        ];
+
+        /*
+            Mail::to(config('mail.debug_group.address'))
+                ->send(new SystemErrorMail($data));
+        */
         exit();
+
     }
 }

@@ -1,3 +1,3 @@
 <div>
-    {{ $message }}
+    {{ json_encode($params) }}
 </div>

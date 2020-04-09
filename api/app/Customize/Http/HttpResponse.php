@@ -2,7 +2,7 @@
 namespace App\Customize\Http;
 
 class HttpResponse{
-    
+
     public function error($res){
         $out = json_encode(array(
             'status'=>'error',
